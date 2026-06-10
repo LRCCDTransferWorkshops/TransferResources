@@ -1,257 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Transfer Portal | Los Rios CCD</title>
-    <style>
-        /* Official Los Rios Community College District Color Guide Theme */
-        :root {
-            --lr-dark-blue: #252d65;      /* Primary Brand Anchor */
-            --lr-medium-blue: #215dd6;    /* Interactive elements & links */
-            --lr-light-blue: #9cceeb;     /* Borders and structural accents */
-            --lr-yellow: #e5bf45;         /* High-contrast brand highlights */
-            --lr-charcoal: #374049;       /* Accessible body typography */
-            --lr-gray-bg: #f7f7f9;        /* Light clean background structure */
-            --white: #ffffff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Transfer Resource Directory</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    /* BRANDING VARIABLES: ARC Official Colors */
+    :root {
+      --arc-blue: #004a99;
+      --arc-red: #8e1104;
+      --bg-gray: #f4f7f9;
+      --border-color: #dee2e6;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--lr-gray-bg);
-            color: var(--lr-charcoal);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-        }
+    body { 
+      background-color: var(--bg-gray); 
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #333;
+    }
 
-        .header-banner {
-            background-color: var(--lr-dark-blue);
-            color: var(--white);
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 5px solid var(--lr-yellow);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+    .header-section {
+      background-color: white;
+      padding: 40px 20px;
+      border-bottom: 5px solid var(--arc-blue);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .main-logo {
+      max-width: 280px;
+      height: auto;
+      margin-bottom: 15px;
+    }
 
-        .header-banner h1 {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
+    .filter-wrapper {
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+    .form-select {
+      border: 2px solid var(--arc-blue);
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: 600;
+    }
 
-        .container {
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+    /* Accordion Custom Row Container */
+    .uni-accordion-row {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .uni-accordion-row:hover {
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      transform: translateX(4px);
+    }
 
-        .category-section {
-            margin-bottom: 35px;
-        }
+    /* Clickable Header Area */
+    .uni-row-header {
+      display: flex;
+      cursor: pointer;
+      user-select: none;
+    }
 
-        .category-title {
-            font-size: 1.35rem;
-            color: var(--lr-dark-blue);
-            border-left: 4px solid var(--lr-yellow);
-            padding-left: 12px;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
+    .inst-branding {
+      width: 160px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+    .logo-frame {
+      width: 100%;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inst-logo-small {
+      max-width: 130px;
+      max-height: 65px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
 
-        /* Dropdown Lists (Accordion Styling) */
-        details {
-            background: var(--white);
-            margin-bottom: 12px;
-            padding: 14px 18px;
-            border-radius: 6px;
-            border: 1px solid #e1e4e6;
-            box-shadow: 0 2px 5px rgba(55, 64, 73, 0.04);
-            transition: all 0.2s ease-in-out;
-        }
+    .uni-details-summary {
+      padding: 22px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .uni-title {
+      color: var(--arc-blue);
+      font-weight: 700;
+      margin-bottom: 0;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+    .info-tag {
+      background: #f0f2f5;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #555;
+      border: 1px solid #e2e8f0;
+    }
 
-        details[open] {
-            box-shadow: 0 4px 12px rgba(37, 45, 101, 0.08);
-            border-color: var(--lr-light-blue);
-        }
+    /* Chevron Indicator Indicator Styling */
+    .dropdown-chevron {
+      font-size: 1.1rem;
+      color: #a0aec0;
+      transition: transform 0.2s ease;
+      font-weight: bold;
+      margin-left: 15px;
+    }
+    .uni-accordion-row [aria-expanded="true"] .dropdown-chevron {
+      transform: rotate(180deg);
+      color: var(--arc-blue);
+    }
 
-        summary {
-            font-weight: 600;
-            cursor: pointer;
-            outline: none;
-            user-select: none;
-            color: var(--lr-dark-blue);
-        }
+    /* Expanded Content Drawer */
+    .uni-expanded-body {
+      background: #fafafa;
+      border-top: 1px solid var(--border-color);
+      padding: 25px 30px;
+    }
+    
+    .panel-header {
+      margin: 0 0 10px 0; 
+      color: #7f8c8d; 
+      font-size: 0.8rem; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
 
-        /* Wraps summary components tightly to protect Safari disclosure icon */
-        .summary-content {
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            vertical-align: middle;
-            margin-left: 6px;
-        }
+    /* Quick Action Link Layout matches previous button styling */
+    .link-box-action {
+      background-color: var(--arc-blue);
+      color: white !important;
+      border-radius: 6px;
+      font-weight: 600;
+      padding: 8px 16px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.9rem;
+      transition: background-color 0.15s;
+    }
+    .link-box-action:hover { background-color: var(--arc-red); }
 
-        .uni-logo {
-            height: 28px;
-            width: 38px;
-            object-fit: contain;
-            background-color: var(--lr-gray-bg);
-            border-radius: 4px;
-            padding: 2px;
-        }
+    .link-box-secondary {
+      border: 1px solid var(--arc-blue);
+      color: var(--arc-blue) !important;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      padding: 7px 15px;
+      transition: background-color 0.15s;
+    }
+    .link-box-secondary:hover { background-color: #eef4fb; }
 
-        summary:hover {
-            color: var(--lr-medium-blue);
-        }
+    .tbd-badge {
+      color: #a0aec0;
+      font-style: italic;
+    }
 
-        .details-interior {
-            padding-top: 15px;
-            margin-top: 12px;
-            border-top: 1px solid var(--lr-gray-bg);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media(max-width: 600px) {
-            .details-interior { 
-                grid-template-columns: 1fr; 
-                gap: 15px;
-            }
-        }
-
-        .details-interior h4 { 
-            margin: 0 0 8px 0; 
-            color: #73777d; 
-            font-size: 0.8rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px;
-        }
-
-        .details-interior p {
-            margin: 6px 0;
-        }
-
-        .details-interior a { 
-            color: var(--lr-medium-blue); 
-            text-decoration: none; 
-            font-weight: 500; 
-        }
-
-        .details-interior a:hover { 
-            text-decoration: underline; 
-            color: var(--lr-dark-blue);
-        }
-
-        .tbd-text {
-            color: #a3a6ab;
-            font-style: italic;
-            font-weight: 500;
-        }
-
-        .loading { 
-            text-align: center; 
-            font-style: italic; 
-            color: #73777d;
-            padding: 40px;
-        }
-    </style>
+    @media (max-width: 768px) {
+      .uni-row-header { flex-direction: column; }
+      .inst-branding { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); padding: 10px; }
+      .logo-frame { height: 60px; }
+      .uni-details-summary { padding: 15px 20px; flex-direction: row; align-items: center; }
+      .uni-title { font-size: 1.15rem; }
+      .uni-expanded-body { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="header-banner">
-    <h1>University Transfer Resource Directory</h1>
-</header>
+  <header class="header-section shadow-sm">
+    <div class="container">
+      <img src="https://lh3.googleusercontent.com/d/1RVwQOqm0u2gHQQOnq-3-NrNJQoW41f8s" class="main-logo" alt="Los Rios Community Colleges Transfer Centers">
+      <h1 class="fw-bold">University Transfer Resource Directory</h1>
+      <p class="text-muted mb-2">Explore system links, check out virtual campus tours, or get directly in touch with transfer representatives across our partner institutions.</p>
+    </div>
+  </header>
 
-<div class="container">
-    <div id="loading" class="loading">Connecting to Los Rios Live Transfer Database...</div>
-    <div id="portal-content"></div>
-</div>
+  <div class="container mb-5">
+    
+    <!-- Sort Filter Wrapper (Maps directly to Category System) -->
+    <div class="filter-wrapper">
+      <select id="categoryFilter" class="form-select shadow-sm" onchange="filterList()">
+        <option value="all">View All System Categories</option>
+        <option value="University of California">University of California (UC)</option>
+        <option value="California State University">California State University (CSU)</option>
+        <option value="Private California University">Private California Universities</option>
+        <option value="Out of State University">Out of State Universities</option>
+      </select>
+    </div>
 
-<script>
-    // Paste your deployed Google Apps Script Web App URL here
-    const API_URL = "https://script.google.com/macros/s/AKfycbw09_gjgO3pbP6uEBqh1lUx0waCzh4ppkb4VofI05FaLrDgM8emFIXzMdWtesb5gsed/exec";
+    <!-- Live Status Spinning Engine Indicator -->
+    <div id="loadingStatus" class="text-center py-5">
+      <div class="spinner-border text-primary mb-2" role="status"></div>
+      <p class="text-muted fw-semibold">Connecting to live university database...</p>
+    </div>
 
-    // Strictly ordered targets following your sorting specifications
-    const categories = [
-        "University of California",
-        "California State University",
-        "Private California University",
-        "Out of State University"
-    ];
+    <!-- Main Output Shell Matrix -->
+    <div id="directoryContainer"></div>
 
-    async function fetchUniversities() {
-        try {
-            const response = await fetch(API_URL);
-            const data = await response.json();
-            
-            document.getElementById('loading').style.display = 'none';
-            renderData(data);
-        } catch (error) {
-            console.error("Error retrieving dataset:", error);
-            document.getElementById('loading').innerText = "Unable to load directory at this moment. Please check back shortly.";
-        }
-    }
+    <!-- Empty Callback Safety Trigger -->
+    <div id="noResults" class="text-center py-5 d-none">
+      <h5 class="text-muted">No institutions discovered matching this system category selector.</h5>
+    </div>
 
-    function renderData(uniList) {
-        const container = document.getElementById('portal-content');
-        
-        categories.forEach(category => {
-            const filteredSchools = uniList.filter(school => school.category === category);
-            
-            if (filteredSchools.length === 0) return; // Skip building empty categories
+  </div>
 
-            const section = document.createElement('div');
-            section.className = 'category-section';
-            
-            const title = document.createElement('h2');
-            title.className = 'category-title';
-            title.innerText = category;
-            section.appendChild(title);
+  <!-- Load Bootstrap JS to handle clean native accordion animations -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // PASTE WEB APP URL DIRECTLY BELOW:
+    const apiEndpoint = "https://script.google.com/macros/s/AKfycbw09_gjgO3pbP6uEBqh1lUx0waCzh4ppkb4VofI05FaLrDgM8emFIXzMdWtesb5gsed/exec";
 
-            filteredSchools.forEach(school => {
-                const details = document.createElement('details');
-                const summary = document.createElement('summary');
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch(apiEndpoint)
+        .then(response => response.json())
+        .then(universities => {
+          document.getElementById('loadingStatus').classList.add('d-none');
+          const listContainer = document.getElementById('directoryContainer');
+          
+          if (universities.length === 0) {
+            document.getElementById('noResults').classList.remove('d-none');
+            return;
+          }
+
+          // Generate unique HTML matrices per school row item loop
+          universities.forEach((school, index) => {
+            let logoHTML = school.logoUrl 
+              ? `<img src="${school.logoUrl}" class="inst-logo-small" alt="${school.name} Logo">`
+              : `<span style="font-size: 0.75rem; color: #cbd5e0; font-weight: bold; text-align:center;">UNIVERSITIES</span>`;
+
+            // Unique ID construction required for targeted Bootstrap collapsible triggers
+            const collapseId = `collapseTarget_${index}`;
+
+            listContainer.innerHTML += `
+              <div class="uni-accordion-row shadow-sm university-item" data-category="${school.category}">
                 
-                // Build layout safely within summary wrapper block
-                const summaryContent = document.createElement('div');
-                summaryContent.className = 'summary-content';
-                
-                if (school.logoUrl) {
-                    summaryContent.innerHTML = `<img src="${school.logoUrl}" alt="" class="uni-logo" onerror="this.style.display='none'">`;
-                }
-                
-                summaryContent.innerHTML += `<span>${school.name}</span>`;
-                summary.appendChild(summaryContent);
-                details.appendChild(summary);
-
-                const content = document.createElement('div');
-                content.className = 'details-interior';
-                content.innerHTML = `
+                <!-- Clickable Interactive Card Header Component -->
+                <div class="uni-row-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                  <div class="inst-branding">
+                    <div class="logo-frame">${logoHTML}</div>
+                  </div>
+                  <div class="uni-details-summary flex-grow-1">
                     <div>
-                        <h4>Resources &amp; Tours</h4>
-                        ${school.transferLink ? `<p><a href="${school.transferLink}" target="_blank">Transfer Information Page ↗</a></p>` : '<p class="tbd-text">No link available</p>'}
-                        ${school.tourLink ? `<p><a href="${school.tourLink}" target="_blank">Campus Virtual Tour ↗</a></p>` : ''}
+                      <h4 class="uni-title">${school.name}</h4>
+                      <span class="info-tag d-inline-block mt-2">${school.category}</span>
                     </div>
-                    <div>
-                        <h4>Transfer Contact</h4>
-                        <p>Email: ${school.email === 'TBD' ? '<span class="tbd-text">TBD</span>' : `<a href="mailto:${school.email}">${school.email}</a>`}</p>
-                        <p>Phone: ${school.phone === 'TBD' ? '<span class="tbd-text">TBD</span>' : `<a href="tel:${school.phone}">${school.phone}</a>`}</p>
-                    </div>
-                `;
-                
-                details.appendChild(content);
-                section.appendChild(details);
-            });
+                    <div class="dropdown-chevron">▼</div>
+                  </div>
+                </div>
 
-            container.appendChild(section);
+                <!-- Collapsible Content Drawer -->
+                <div id="${collapseId}" class="collapse" data-bs-parent="#directoryContainer">
+                  <div class="uni-expanded-body">
+                    <div class="row g-4">
+                      
+                      <!-- Left Data-Block Column: Network Gateways -->
+                      <div class="col-md-6">
+                        <div class="panel-header">Resources &amp; Campus Access</div>
+                        <div class="mt-2 mb-3">
+                          ${school.transferLink ? `<a href="${school.transferLink}" target="_blank" class="link-box-action me-2 mb-2">Transfer Resource Hub ↗</a>` : '<span class="tbd-badge">No system profile provided</span>'}
+                          ${school.tourLink ? `<a href="${school.tourLink}" target="_blank" class="link-box-secondary mb-2">Virtual Campus Tour ↗</a>` : ''}
+                        </div>
+                      </div>
+
+                      <!-- Right Data-Block Column: Communication & Support Channels -->
+                      <div class="col-md-6">
+                        <div class="panel-header">Admissions Support Contact</div>
+                        <p class="mb-1 small">
+                          <strong>Email:</strong> 
+                          ${school.email === 'TBD' ? '<span class="tbd-badge">TBD</span>' : `<a href="mailto:${school.email}" style="color: var(--arc-blue); text-decoration:none;">${school.email}</a>`}
+                        </p>
+                        <p class="mb-0 small">
+                          <strong>Phone:</strong> 
+                          ${school.phone === 'TBD' ? '<span class="tbd-badge">TBD</span>' : `<a href="tel:${school.phone}" style="color: var(--arc-blue); text-decoration:none;">${school.phone}</a>`}
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            `;
+          });
+        })
+        .catch(error => {
+          document.getElementById('loadingStatus').innerHTML = `<p class="text-danger fw-semibold">Failed to load directory configuration database.</p>`;
+          console.error(error);
         });
-    }
+    });
 
-    // Run Engine
-    fetchUniversities();
-</script>
+    // Frontend Filtration Sorting Processor Engine
+    function filterList() {
+      const selectedCategory = document.getElementById('categoryFilter').value;
+      const items = document.querySelectorAll('.university-item');
+      let matchingCount = 0;
+
+      items.forEach(el => {
+        // Automatically isolate matching datasets while hiding non-selections smoothly
+        if (selectedCategory === 'all' || el.getAttribute('data-category') === selectedCategory) {
+          el.style.display = 'block';
+          matchingCount++;
+          
+          // Collapse any panels left open when switching category filters to clean UI spacing
+          const collapseEl = el.querySelector('.collapse');
+          if (collapseEl && collapseEl.classList.contains('show')) {
+            const bsCollapse = bootstrap.Collapse.getInstance(collapseEl);
+            if(bsCollapse) bsCollapse.hide();
+          }
+        } else {
+          el.style.display = 'none';
+        }
+      });
+      
+      document.getElementById('noResults').classList.toggle('d-none', matchingCount > 0);
+    }
+  </script>
 </body>
 </html>
