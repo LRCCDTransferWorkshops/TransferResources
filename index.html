@@ -3,22 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>University Transfer Resource Directory</title>
+  <title>University Transfer Resource Directory | Los Rios CCD</title>
+  
+  <meta name="description" content="Live multi-system directory for four-year university transfer resources, campus virtual tours, and admissions contact channels across the Los Rios Community College District.">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   
   <style>
-    /* BRANDING VARIABLES: ARC Official Colors */
+    /* BRANDING VARIABLES: ARC & District Approved Baseline Colors */
     :root {
       --arc-blue: #004a99;
       --arc-red: #8e1104;
       --bg-gray: #f4f7f9;
       --border-color: #dee2e6;
+      --text-dark: #212529;
+      --text-muted: #555555;
     }
 
     body { 
       background-color: var(--bg-gray); 
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      color: #333;
+      color: var(--text-dark);
+    }
+
+    /* Skip Link to bypass global site header architecture via keyboard */
+    .skip-to-content {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      background-color: var(--arc-blue);
+      color: white !important;
+      padding: 10px 20px;
+      z-index: 9999;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 0 0 8px 0;
+    }
+    .skip-to-content:focus-visible {
+      top: 0;
+      outline: 4px solid #ffbf47 !important;
+      outline-offset: 2px !important;
     }
 
     .header-section {
@@ -34,305 +58,298 @@
       margin-bottom: 15px;
     }
 
-    .filter-wrapper {
-      max-width: 500px;
-      margin: 0 auto 40px;
-    }
-    .form-select {
-      border: 2px solid var(--arc-blue);
-      border-radius: 8px;
-      padding: 10px;
-      font-weight: 600;
+    /* COMPLIANCE FIX: HIGH-CONTRAST FOCUS INDICATORS (WCAG 2.1 SC 2.4.7) */
+    a:focus-visible, 
+    button:focus-visible {
+      outline: 4px solid #ffbf47 !important;
+      outline-offset: 3px !important;
+      box-shadow: 0 0 0 4px rgba(0, 74, 153, 0.4) !important;
     }
 
-    /* Accordion Custom Row Container */
-    .uni-accordion-row {
+    /* System Level Accordion Layout Customizations */
+    .accordion-item {
+      border: 1px solid var(--border-color) !important;
+      border-radius: 12px !important;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+    .accordion-button {
+      background-color: white !important;
+      color: var(--arc-blue) !important;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: 20px 25px;
+    }
+    .accordion-button:not(.collapsed) {
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: none;
+    }
+
+    /* Component Grid Cards */
+    .uni-card {
       background: white;
-      border-radius: 12px;
-      margin-bottom: 16px;
       border: 1px solid var(--border-color);
+      border-radius: 10px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       transition: transform 0.2s, box-shadow 0.2s;
       overflow: hidden;
     }
-    .uni-accordion-row:hover {
+    .uni-card:hover {
+      transform: translateY(-4px);
       box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      transform: translateX(4px);
     }
 
-    /* Clickable Header Area */
-    .uni-row-header {
-      display: flex;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .inst-branding {
-      width: 160px;
-      padding: 15px;
+    .card-logo-frame {
+      height: 120px;
+      background-color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #ffffff;
-      border-right: 1px solid var(--border-color);
-      flex-shrink: 0;
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
     }
-    .logo-frame {
-      width: 100%;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .inst-logo-small {
-      max-width: 130px;
-      max-height: 65px;
-      width: auto;
-      height: auto;
+    .card-logo {
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
     }
 
-    .uni-details-summary {
-      padding: 22px 30px;
+    .card-body-content {
+      padding: 25px;
+      flex-grow: 1;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
     }
-    .uni-title {
+    .uni-card-title {
       color: var(--arc-blue);
       font-weight: 700;
-      margin-bottom: 0;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
       line-height: 1.2;
     }
-    .info-tag {
-      background: #f0f2f5;
-      padding: 5px 12px;
+    .uni-description {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      flex-grow: 1;
+      line-height: 1.5;
+    }
+
+    /* Embedded Dynamic Google Map Panel Frame */
+    .map-wrapper {
+      width: 100%;
+      height: 150px;
       border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #555;
-      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      margin-bottom: 15px;
+      border: 1px solid var(--border-color);
+    }
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
 
-    /* Chevron Indicator Indicator Styling */
-    .dropdown-chevron {
-      font-size: 1.1rem;
-      color: #a0aec0;
-      transition: transform 0.2s ease;
-      font-weight: bold;
-      margin-left: 15px;
+    .contact-details {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 0.9rem;
+      border: 1px solid #e9ecef;
+      margin-bottom: 15px;
     }
-    .uni-accordion-row [aria-expanded="true"] .dropdown-chevron {
-      transform: rotate(180deg);
-      color: var(--arc-blue);
-    }
-
-    /* Expanded Content Drawer */
-    .uni-expanded-body {
-      background: #fafafa;
-      border-top: 1px solid var(--border-color);
-      padding: 25px 30px;
-    }
-    
     .panel-header {
       margin: 0 0 10px 0; 
-      color: #7f8c8d; 
+      color: var(--text-dark); 
       font-size: 0.8rem; 
       text-transform: uppercase;
       letter-spacing: 0.5px;
       font-weight: 700;
     }
 
-    /* Quick Action Link Layout matches previous button styling */
-    .link-box-action {
+    /* Link Action Button Interfaces */
+    .btn-action {
       background-color: var(--arc-blue);
       color: white !important;
       border-radius: 6px;
-      font-weight: 600;
-      padding: 8px 16px;
+      font-weight: 700;
+      padding: 12px;
+      text-align: center;
       text-decoration: none;
-      display: inline-block;
       font-size: 0.9rem;
-      transition: background-color 0.15s;
+      margin-bottom: 10px;
     }
-    .link-box-action:hover { background-color: var(--arc-red); }
+    .btn-action:hover, .btn-action:focus-visible { 
+      background-color: var(--arc-red) !important; 
+    }
 
-    .link-box-secondary {
+    .btn-secondary-action {
       border: 1px solid var(--arc-blue);
       color: var(--arc-blue) !important;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
+      text-align: center;
       text-decoration: none;
-      display: inline-block;
-      padding: 7px 15px;
-      transition: background-color 0.15s;
+      padding: 10px;
     }
-    .link-box-secondary:hover { background-color: #eef4fb; }
-
-    .tbd-badge {
-      color: #a0aec0;
-      font-style: italic;
+    .btn-secondary-action:hover, .btn-secondary-action:focus-visible { 
+      background-color: #eef4fb !important; 
     }
 
-    @media (max-width: 768px) {
-      .uni-row-header { flex-direction: column; }
-      .inst-branding { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); padding: 10px; }
-      .logo-frame { height: 60px; }
-      .uni-details-summary { padding: 15px 20px; flex-direction: row; align-items: center; }
-      .uni-title { font-size: 1.15rem; }
-      .uni-expanded-body { padding: 20px; }
-    }
+    .tbd-badge { color: #721c24; font-style: italic; font-weight: 500; }
   </style>
 </head>
 <body>
+
+  <a href="#mainDirectoryContent" class="skip-to-content">Skip to Main Content</a>
 
   <header class="header-section shadow-sm">
     <div class="container">
       <img src="https://lh3.googleusercontent.com/d/1RVwQOqm0u2gHQQOnq-3-NrNJQoW41f8s" class="main-logo" alt="Los Rios Community Colleges Transfer Centers">
       <h1 class="fw-bold">University Transfer Resource Directory</h1>
-      <p class="text-muted mb-2">Explore system links, check out virtual campus tours, or get directly in touch with transfer representatives across our partner institutions.</p>
+      <p class="text-muted mb-3">Select a higher education system option below to access dynamic system portals, check virtual campus tour links, and locate dedicated admissions customer service channels.</p>
+      
+      <div class="alert alert-info py-2 px-3 mx-auto d-inline-block small border-0 shadow-sm" role="note" style="max-width: 600px; border-radius: 8px;">
+         All resource hubs and virtual tour web links open in a new browser tab or window on external university domains.
+      </div>
     </div>
   </header>
 
-  <div class="container mb-5">
+  <main class="container mb-5" id="mainDirectoryContent">
     
-    <!-- Sort Filter Wrapper (Maps directly to Category System) -->
-    <div class="filter-wrapper">
-      <select id="categoryFilter" class="form-select shadow-sm" onchange="filterList()">
-        <option value="all">View All System Categories</option>
-        <option value="University of California">University of California (UC)</option>
-        <option value="California State University">California State University (CSU)</option>
-        <option value="Private California University">Private California Universities</option>
-        <option value="Out of State University">Out of State Universities</option>
-      </select>
+    <!-- Dynamic Spinning Status Block Engine -->
+    <div id="loadingStatus" class="text-center py-5" aria-live="polite" role="status">
+      <div class="spinner-border text-primary mb-2" role="status">
+        <span class="visually-hidden">Loading system asset configuration links...</span>
+      </div>
+      <p class="text-muted fw-semibold">Loading live university directory profiles...</p>
     </div>
 
-    <!-- Live Status Spinning Engine Indicator -->
-    <div id="loadingStatus" class="text-center py-5">
-      <div class="spinner-border text-primary mb-2" role="status"></div>
-      <p class="text-muted fw-semibold">Connecting to live university database...</p>
-    </div>
+    <!-- Accordion Shell Matrix Structure -->
+    <div class="accordion" id="systemAccordion"></div>
 
-    <!-- Main Output Shell Matrix -->
-    <div id="directoryContainer"></div>
+    <!-- Empty/Failed Callback Validation Alert Box -->
+    <div id="statusNotification" class="text-center py-5 d-none" aria-live="assertive" role="status"></div>
 
-    <!-- Empty Callback Safety Trigger -->
-    <div id="noResults" class="text-center py-5 d-none">
-      <h5 class="text-muted">No institutions discovered matching this system category selector.</h5>
-    </div>
+  </main>
 
-  </div>
-
-  <!-- Load Bootstrap JS to handle clean native accordion animations -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // PASTE WEB APP URL DIRECTLY BELOW:
-    const apiEndpoint = "https://script.google.com/macros/s/AKfycbw09_gjgO3pbP6uEBqh1lUx0waCzh4ppkb4VofI05FaLrDgM8emFIXzMdWtesb5gsed/exec";
+    // Paste your deployed Google Apps Script Web App URL directly below:
+    const apiEndpoint = "YOUR_APPS_SCRIPT_WEB_APP_URL";
+
+    // Strictly ordered categories for sequential accordion compilation
+    const categories = [
+        "University of California",
+        "California State University",
+        "Private California University",
+        "Out of State University"
+    ];
 
     document.addEventListener("DOMContentLoaded", () => {
       fetch(apiEndpoint)
         .then(response => response.json())
         .then(universities => {
           document.getElementById('loadingStatus').classList.add('d-none');
-          const listContainer = document.getElementById('directoryContainer');
           
-          if (universities.length === 0) {
-            document.getElementById('noResults').classList.remove('d-none');
+          if (universities.error) {
+            showErrorStatus(`Database Compilation Error: ${universities.error}`);
             return;
           }
 
-          // Generate unique HTML matrices per school row item loop
-          universities.forEach((school, index) => {
-            let logoHTML = school.logoUrl 
-              ? `<img src="${school.logoUrl}" class="inst-logo-small" alt="${school.name} Logo">`
-              : `<span style="font-size: 0.75rem; color: #cbd5e0; font-weight: bold; text-align:center;">UNIVERSITIES</span>`;
+          if (universities.length === 0) {
+            showErrorStatus("No higher education systems found within the active sheet database matrix.");
+            return;
+          }
 
-            // Unique ID construction required for targeted Bootstrap collapsible triggers
-            const collapseId = `collapseTarget_${index}`;
+          const accordionRoot = document.getElementById('systemAccordion');
 
-            listContainer.innerHTML += `
-              <div class="uni-accordion-row shadow-sm university-item" data-category="${school.category}">
-                
-                <!-- Clickable Interactive Card Header Component -->
-                <div class="uni-row-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
-                  <div class="inst-branding">
-                    <div class="logo-frame">${logoHTML}</div>
-                  </div>
-                  <div class="uni-details-summary flex-grow-1">
-                    <div>
-                      <h4 class="uni-title">${school.name}</h4>
-                      <span class="info-tag d-inline-block mt-2">${school.category}</span>
-                    </div>
-                    <div class="dropdown-chevron">▼</div>
-                  </div>
+          categories.forEach((category, catIndex) => {
+            const filteredSchools = universities.filter(s => s.category === category);
+            if (filteredSchools.length === 0) return; // Safely bypass unpopulated sheets columns
+
+            const accordionId = `categoryCollapse_${catIndex}`;
+            const listId = `universityList_${catIndex}`;
+            const isFirst = catIndex === 0; // Automatically expands the premier category entry
+
+            // Build structural Accordion segment matching wireframe rules
+            const accordionItem = document.createElement('div');
+            accordionItem.className = 'accordion-item';
+            
+            // WCAG Standard: Category tracking maps cleanly to semantic H2 tags
+            accordionItem.innerHTML = `
+              <h2 class="accordion-header">
+                <button class="accordion-button ${isFirst ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#${accordionId}" aria-expanded="${isFirst}" aria-controls="${accordionId}">
+                  ${category} (${filteredSchools.length} Institutions)
+                </button>
+              </h2>
+              <div id="${accordionId}" class="accordion-collapse collapse ${isFirst ? 'show' : ''}" data-bs-parent="#systemAccordion">
+                <div class="accordion-body bg-light">
+                  <!-- WCAG Compliance: Cards run within clean semantic list items under an explicit list parent element -->
+                  <ul class="row g-4 list-unstyled mb-0" id="${listId}" aria-label="Available campuses under the ${category} system"></ul>
                 </div>
-
-                <!-- Collapsible Content Drawer -->
-                <div id="${collapseId}" class="collapse" data-bs-parent="#directoryContainer">
-                  <div class="uni-expanded-body">
-                    <div class="row g-4">
-                      
-                      <!-- Left Data-Block Column: Network Gateways -->
-                      <div class="col-md-6">
-                        <div class="panel-header">Resources &amp; Campus Access</div>
-                        <div class="mt-2 mb-3">
-                          ${school.transferLink ? `<a href="${school.transferLink}" target="_blank" class="link-box-action me-2 mb-2">Transfer Resource Hub ↗</a>` : '<span class="tbd-badge">No system profile provided</span>'}
-                          ${school.tourLink ? `<a href="${school.tourLink}" target="_blank" class="link-box-secondary mb-2">Virtual Campus Tour ↗</a>` : ''}
-                        </div>
-                      </div>
-
-                      <!-- Right Data-Block Column: Communication & Support Channels -->
-                      <div class="col-md-6">
-                        <div class="panel-header">Admissions Support Contact</div>
-                        <p class="mb-1 small">
-                          <strong>Email:</strong> 
-                          ${school.email === 'TBD' ? '<span class="tbd-badge">TBD</span>' : `<a href="mailto:${school.email}" style="color: var(--arc-blue); text-decoration:none;">${school.email}</a>`}
-                        </p>
-                        <p class="mb-0 small">
-                          <strong>Phone:</strong> 
-                          ${school.phone === 'TBD' ? '<span class="tbd-badge">TBD</span>' : `<a href="tel:${school.phone}" style="color: var(--arc-blue); text-decoration:none;">${school.phone}</a>`}
-                        </p>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
               </div>
             `;
+            
+            accordionRoot.appendChild(accordionItem);
+            const cardsContainer = document.getElementById(listId);
+
+            // Loop and assemble matching child layout cards
+            filteredSchools.forEach(school => {
+              let logoHTML = school.logoUrl 
+                ? `<img src="${school.logoUrl}" class="card-logo" alt="${school.name} official branding logo">`
+                : `<span style="font-size: 0.8rem; color: #cbd5e0; font-weight: bold; text-align:center;">CAMPUS EMBLEM</span>`;
+
+              const mapQuery = encodeURIComponent(`${school.name}, California`);
+              // Dynamic frame injection using title variables explicitly satisfying WCAG 4.1.2 framework parameters
+              const dynamicMapEmbed = `<iframe src="https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed" title="Geographic coordinates viewport mapping for ${school.name}" allowfullscreen></iframe>`;
+
+              const cardListItem = document.createElement('li');
+              cardListItem.className = 'col-md-6 col-lg-4';
+              
+              // Structural Check: Card names represent list items and deploy semantic H3 variables
+              cardListItem.innerHTML = `
+                <div class="uni-card shadow-sm">
+                  <div class="card-logo-frame" aria-hidden="true">${logoHTML}</div>
+                  
+                  <div class="card-body-content">
+                    <h3 class="uni-card-title">${school.name}</h3>
+                    <p class="uni-description">${school.description}</p>
+                    
+                    <div class="map-wrapper">${dynamicMapEmbed}</div>
+
+                    <div class="contact-details">
+                      <h4 class="panel-header">Admissions Support Contact</h4>
+                      <div class="small"><strong>Email:</strong> ${school.email === 'TBD' ? '<span class="tbd-badge">TBD</span>' : `<a href="mailto:${school.email}" aria-label="Email ${school.name} representative">${school.email}</a>`}</div>
+                      <div class="mt-2 small"><strong>Phone:</strong> ${school.phone === 'TBD' ? '<span class="tbd-badge">TBD</span>' : `<a href="tel:${school.phone}" aria-label="Call ${school.name} support center">${school.phone}</a>`}</div>
+                    </div>
+
+                    <div class="d-flex flex-column mt-auto">
+                      ${school.transferLink ? `<a href="${school.transferLink}" target="_blank" class="btn btn-action" aria-label="Access Transfer Resource Hub for ${school.name}. Opens in a new tab.">Transfer Resource Hub ↗</a>` : ''}
+                      ${school.tourLink ? `<a href="${school.tourLink}" target="_blank" class="btn btn-secondary-action" aria-label="Launch Virtual Campus Tour for ${school.name}. Opens in a new tab.">Virtual Campus Tour ↗</a>` : ''}
+                    </div>
+                  </div>
+                </div>
+              `;
+              cardsContainer.appendChild(cardListItem);
+            });
           });
         })
         .catch(error => {
-          document.getElementById('loadingStatus').innerHTML = `<p class="text-danger fw-semibold">Failed to load directory configuration database.</p>`;
+          showErrorStatus("Failed to compile live university resource profiles from database source layout configuration.");
           console.error(error);
         });
     });
 
-    // Frontend Filtration Sorting Processor Engine
-    function filterList() {
-      const selectedCategory = document.getElementById('categoryFilter').value;
-      const items = document.querySelectorAll('.university-item');
-      let matchingCount = 0;
-
-      items.forEach(el => {
-        // Automatically isolate matching datasets while hiding non-selections smoothly
-        if (selectedCategory === 'all' || el.getAttribute('data-category') === selectedCategory) {
-          el.style.display = 'block';
-          matchingCount++;
-          
-          // Collapse any panels left open when switching category filters to clean UI spacing
-          const collapseEl = el.querySelector('.collapse');
-          if (collapseEl && collapseEl.classList.contains('show')) {
-            const bsCollapse = bootstrap.Collapse.getInstance(collapseEl);
-            if(bsCollapse) bsCollapse.hide();
-          }
-        } else {
-          el.style.display = 'none';
-        }
-      });
-      
-      document.getElementById('noResults').classList.toggle('d-none', matchingCount > 0);
+    function showErrorStatus(messageText) {
+      document.getElementById('loadingStatus').classList.add('d-none');
+      const notifyBlock = document.getElementById('statusNotification');
+      notifyBlock.classList.remove('d-none');
+      notifyBlock.innerHTML = `<p class="text-danger fw-bold h5" role="alert">${messageText}</p>`;
     }
   </script>
 </body>
