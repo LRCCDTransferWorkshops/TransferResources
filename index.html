@@ -10,14 +10,16 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   
   <style>
-    /* BRANDING VARIABLES: ARC & District Approved Baseline Colors */
+    /* BRANDING VARIABLES: Official Los Rios Blue & Gold Color Guide Palette */
     :root {
-      --arc-blue: #004a99;
-      --arc-red: #8e1104;
-      --bg-gray: #f4f7f9;
-      --border-color: #dee2e6;
-      --text-dark: #212529;
-      --text-muted: #555555;
+      --lr-dark-blue: #252d65;       /* Primary Rich Dark Blue */
+      --lr-med-blue: #215dd6;        /* Accent Link Blue */
+      --lr-light-blue: #9cceeb;      /* Framing Tones */
+      --lr-gold: #e5bf45;            /* Secondary Brand Gold Accent */
+      --lr-gold-light: #fcf6e3;      /* WCAG compliant soft gold tint for structural panels */
+      --bg-gray: #f7f7f9;            /* Official Lighter Gray Neutral */
+      --text-dark: #374049;          /* Official Charcoal Neutral for optimal text reading */
+      --border-color: #c8cbce;       /* Official Light Gray for borders */
     }
 
     body { 
@@ -31,31 +33,50 @@
       position: absolute;
       top: -100px;
       left: 0;
-      background-color: var(--arc-blue);
-      color: white !important;
+      background-color: var(--lr-gold);
+      color: var(--lr-dark-blue) !important;
       padding: 10px 20px;
       z-index: 9999;
-      font-weight: 600;
+      font-weight: 700;
       text-decoration: none;
       border-radius: 0 0 8px 0;
     }
     .skip-to-content:focus-visible {
       top: 0;
-      outline: 4px solid #ffbf47 !important;
+      outline: 4px solid var(--lr-dark-blue) !important;
       outline-offset: 2px !important;
     }
 
+    /* Vibrant, Sleek Dark Blue Header Module */
     .header-section {
-      background-color: white;
-      padding: 40px 20px;
-      border-bottom: 5px solid var(--arc-blue);
+      background-color: var(--lr-dark-blue);
+      padding: 50px 20px;
+      border-bottom: 6px solid var(--lr-gold);
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      color: white;
+      box-shadow: 0 4px 15px rgba(37, 45, 101, 0.15);
     }
     .main-logo {
       max-width: 280px;
       height: auto;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      filter: brightness(0) invert(1); /* Smoothly transitions standard logo variants to crisp white against the blue dark field */
+    }
+    .header-section p {
+      color: var(--lr-light-blue);
+      font-size: 1.05rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* Disclaimer Note Styling based on image_dc7fa4.png */
+    .feedback-disclaimer {
+      font-style: italic;
+      color: #e2e8f5; /* High contrast off-white to ensure readability against the dark blue banner */
+      font-size: 0.95rem;
     }
 
     /* COMPLIANCE FIX: HIGH-CONTRAST FOCUS INDICATORS (WCAG 2.1 SC 2.4.7) */
@@ -63,30 +84,32 @@
     button:focus-visible {
       outline: 4px solid #ffbf47 !important;
       outline-offset: 3px !important;
-      box-shadow: 0 0 0 4px rgba(0, 74, 153, 0.4) !important;
+      box-shadow: 0 0 0 4px var(--lr-dark-blue) !important;
     }
 
-    /* System Level Accordion Layout Customizations */
+    /* System Level Accordion Customizations */
     .accordion-item {
       border: 1px solid var(--border-color) !important;
       border-radius: 12px !important;
       overflow: hidden;
       margin-bottom: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.03);
     }
     .accordion-button {
       background-color: white !important;
-      color: var(--arc-blue) !important;
+      color: var(--lr-dark-blue) !important;
       font-size: 1.4rem;
       font-weight: 700;
-      padding: 20px 25px;
+      padding: 22px 25px;
+      transition: background-color 0.2s ease;
     }
     .accordion-button:not(.collapsed) {
-      border-bottom: 1px solid var(--border-color);
+      background-color: #f0f4fa !important;
+      border-bottom: 2px solid var(--lr-light-blue);
       box-shadow: none;
     }
 
-    /* Component Grid Cards */
+    /* Sleek Component Grid Cards */
     .uni-card {
       background: white;
       border: 1px solid var(--border-color);
@@ -94,12 +117,13 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       overflow: hidden;
     }
     .uni-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(37, 45, 101, 0.1);
+      border-color: var(--lr-light-blue);
     }
 
     .card-logo-frame {
@@ -124,18 +148,18 @@
       flex-direction: column;
     }
     .uni-card-title {
-      color: var(--arc-blue);
+      color: var(--lr-dark-blue);
       font-weight: 700;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       margin-bottom: 12px;
       line-height: 1.2;
     }
     .uni-description {
       font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-bottom: 15px;
+      color: var(--text-dark);
+      margin-bottom: 20px;
       flex-grow: 1;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     /* Embedded Dynamic Google Map Panel Frame */
@@ -144,7 +168,7 @@
       height: 150px;
       border-radius: 6px;
       overflow: hidden;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border: 1px solid var(--border-color);
     }
     .map-wrapper iframe {
@@ -153,26 +177,37 @@
       border: 0;
     }
 
+    /* Soft Gold Compliant Container Block */
     .contact-details {
-      background-color: #f8f9fa;
+      background-color: var(--lr-gold-light);
       border-radius: 8px;
-      padding: 15px;
+      padding: 18px;
       font-size: 0.9rem;
-      border: 1px solid #e9ecef;
-      margin-bottom: 15px;
+      border: 1px solid var(--lr-gold);
+      margin-bottom: 20px;
     }
     .panel-header {
-      margin: 0 0 10px 0; 
-      color: var(--text-dark); 
+      margin: 0 0 12px 0; 
+      color: var(--lr-dark-blue); 
       font-size: 0.8rem; 
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 700;
+      letter-spacing: 0.7px;
+      font-weight: 800;
+      border-bottom: 1px solid rgba(37, 45, 101, 0.15);
+      padding-bottom: 4px;
+    }
+    .contact-details a {
+      color: var(--lr-med-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact-details a:hover {
+      text-decoration: underline;
     }
 
     /* Link Action Button Interfaces */
     .btn-action {
-      background-color: var(--arc-blue);
+      background-color: var(--lr-dark-blue);
       color: white !important;
       border-radius: 6px;
       font-weight: 700;
@@ -181,26 +216,31 @@
       text-decoration: none;
       font-size: 0.9rem;
       margin-bottom: 10px;
+      border: none;
+      transition: background-color 0.15s ease;
+      box-shadow: 0 2px 4px rgba(37, 45, 101, 0.1);
     }
     .btn-action:hover, .btn-action:focus-visible { 
-      background-color: var(--arc-red) !important; 
+      background-color: var(--lr-med-blue) !important; 
     }
 
     .btn-secondary-action {
-      border: 1px solid var(--arc-blue);
-      color: var(--arc-blue) !important;
+      border: 2px solid var(--lr-dark-blue);
+      color: var(--lr-dark-blue) !important;
       border-radius: 6px;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
       text-decoration: none;
       padding: 10px;
+      transition: all 0.15s ease;
     }
     .btn-secondary-action:hover, .btn-secondary-action:focus-visible { 
-      background-color: #eef4fb !important; 
+      background-color: var(--lr-dark-blue) !important; 
+      color: white !important;
     }
 
-    .tbd-badge { color: #721c24; font-style: italic; font-weight: 500; }
+    .tbd-badge { color: #a62639; font-style: italic; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -209,12 +249,21 @@
 
   <header class="header-section shadow-sm">
     <div class="container">
-      <img src="https://lh3.googleusercontent.com/d/1RVwQOqm0u2gHQQOnq-3-NrNJQoW41f8s" class="main-logo" alt="Los Rios Community Colleges Transfer Centers">
-      <h1 class="fw-bold">University Transfer Resource Directory</h1>
-      <p class="text-muted mb-3">Select a higher education system option below to access dynamic system portals, check virtual campus tour links, and locate dedicated admissions customer service channels.</p>
+      <img src="https://lh3.googleusercontent.com/d/1RVwQOqm0u2gHQQOnq-3-NrNJQoW41f8s" class="main-logo" alt="Los Rios Community Colleges District">
+      <h1 class="fw-bold h2">University Transfer Resource Directory</h1>
       
-      <div class="alert alert-info py-2 px-3 mx-auto d-inline-block small border-0 shadow-sm" role="note" style="max-width: 600px; border-radius: 8px;">
-         All resource hubs and virtual tour web links open in a new browser tab or window on external university domains.
+      <!-- New professionalized portal description -->
+      <p class="mb-3">
+        This comprehensive directory provides prospective transfer students with centralized resources for four-year institutions. Each campus listing features direct transfer information hubs, virtual tours, and representative contact channels to guide your transition. Please note that due to external staffing shifts, specific institutional points of contact may occasionally be unavailable; in these instances, we recommend reaching out to the university's general undergraduate admissions office or visiting your local community college transfer center. Students are encouraged to explore a diverse array of campuses to identify the optimal match for their academic and personal goals.
+      </p>
+      
+      <!-- Disclaimer feedback note matching image_dc7fa4.png structural layout -->
+      <p class="feedback-disclaimer mb-4">
+        <strong>Note:</strong> To help us improve this resource, students may be requested to provide feedback on this page.
+      </p>
+      
+      <div class="alert alert-light py-2 px-3 mx-auto d-inline-block small border-0 shadow-sm text-dark" role="note" style="max-width: 650px; border-radius: 8px; font-weight: 500;">
+         <strong>System Note:</strong> All resource hubs and virtual tour web links open in a new browser tab or window on external university domains.
       </div>
     </div>
   </header>
@@ -239,10 +288,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Paste your deployed Google Apps Script Web App URL directly below:
-    const apiEndpoint = "https://script.google.com/macros/s/AKfycbw09_gjgO3pbP6uEBqh1lUx0waCzh4ppkb4VofI05FaLrDgM8emFIXzMdWtesb5gsed/exec";
+    const apiEndpoint = "YOUR_APPS_SCRIPT_WEB_APP_URL";
 
-    // Strictly ordered categories for sequential accordion compilation
     const categories = [
         "University of California",
         "California State University",
@@ -270,17 +317,15 @@
 
           categories.forEach((category, catIndex) => {
             const filteredSchools = universities.filter(s => s.category === category);
-            if (filteredSchools.length === 0) return; // Safely bypass unpopulated sheets columns
+            if (filteredSchools.length === 0) return; 
 
             const accordionId = `categoryCollapse_${catIndex}`;
             const listId = `universityList_${catIndex}`;
-            const isFirst = catIndex === 0; // Automatically expands the premier category entry
+            const isFirst = catIndex === 0;
 
-            // Build structural Accordion segment matching wireframe rules
             const accordionItem = document.createElement('div');
             accordionItem.className = 'accordion-item';
             
-            // WCAG Standard: Category tracking maps cleanly to semantic H2 tags
             accordionItem.innerHTML = `
               <h2 class="accordion-header">
                 <button class="accordion-button ${isFirst ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#${accordionId}" aria-expanded="${isFirst}" aria-controls="${accordionId}">
@@ -289,7 +334,6 @@
               </h2>
               <div id="${accordionId}" class="accordion-collapse collapse ${isFirst ? 'show' : ''}" data-bs-parent="#systemAccordion">
                 <div class="accordion-body bg-light">
-                  <!-- WCAG Compliance: Cards run within clean semantic list items under an explicit list parent element -->
                   <ul class="row g-4 list-unstyled mb-0" id="${listId}" aria-label="Available campuses under the ${category} system"></ul>
                 </div>
               </div>
@@ -298,20 +342,17 @@
             accordionRoot.appendChild(accordionItem);
             const cardsContainer = document.getElementById(listId);
 
-            // Loop and assemble matching child layout cards
             filteredSchools.forEach(school => {
               let logoHTML = school.logoUrl 
-                ? `<img src="${school.logoUrl}" class="card-logo" alt="${school.name} official branding logo">`
-                : `<span style="font-size: 0.8rem; color: #cbd5e0; font-weight: bold; text-align:center;">CAMPUS EMBLEM</span>`;
+                ? `<img src="${school.logoUrl}" class="card-logo" alt="${school.name} branding logo">`
+                : `<span style="font-size: 0.8rem; color: var(--border-color); font-weight: bold; text-align:center;">CAMPUS EMBLEM</span>`;
 
               const mapQuery = encodeURIComponent(`${school.name}, California`);
-              // Dynamic frame injection using title variables explicitly satisfying WCAG 4.1.2 framework parameters
               const dynamicMapEmbed = `<iframe src="https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed" title="Geographic coordinates viewport mapping for ${school.name}" allowfullscreen></iframe>`;
 
               const cardListItem = document.createElement('li');
               cardListItem.className = 'col-md-6 col-lg-4';
               
-              // Structural Check: Card names represent list items and deploy semantic H3 variables
               cardListItem.innerHTML = `
                 <div class="uni-card shadow-sm">
                   <div class="card-logo-frame" aria-hidden="true">${logoHTML}</div>
@@ -351,6 +392,6 @@
       notifyBlock.classList.remove('d-none');
       notifyBlock.innerHTML = `<p class="text-danger fw-bold h5" role="alert">${messageText}</p>`;
     }
-  </script> 
+  </script>
 </body>
-</html>  
+</html>
