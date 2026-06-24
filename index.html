@@ -16,7 +16,6 @@
       --lr-med-blue: #215dd6;        /* Accent Link Blue */
       --lr-light-blue: #9cceeb;      /* Framing Tones */
       --lr-gold: #e5bf45;            /* Secondary Brand Gold Accent */
-      --lr-gold-light: #fcf6e3;      /* WCAG compliant soft gold tint for structural panels */
       --bg-gray: #f7f7f9;            /* Official Lighter Gray Neutral */
       --text-dark: #374049;          /* Official Charcoal Neutral for optimal text reading */
       --border-color: #c8cbce;       /* Official Light Gray for borders */
@@ -61,7 +60,7 @@
       max-width: 280px;
       height: auto;
       margin-bottom: 20px;
-      filter: brightness(0) invert(1); /* Smoothly transitions standard logo variants to crisp white against the blue dark field */
+      filter: brightness(0) invert(1); /* Transitions logo to crisp white against dark blue background */
     }
     .header-section p {
       color: var(--lr-light-blue);
@@ -72,10 +71,10 @@
       line-height: 1.6;
     }
 
-    /* Disclaimer Note Styling based on image_dc7fa4.png */
+    /* Disclaimer Note Styling matching your feedback screenshot format */
     .feedback-disclaimer {
       font-style: italic;
-      color: #e2e8f5; /* High contrast off-white to ensure readability against the dark blue banner */
+      color: #e2e8f5; 
       font-size: 0.95rem;
     }
 
@@ -104,14 +103,18 @@
       transition: background-color 0.2s ease;
     }
     .accordion-button:not(.collapsed) {
-      background-color: #f0f4fa !important;
       border-bottom: 2px solid var(--lr-light-blue);
       box-shadow: none;
     }
 
-    /* Sleek Component Grid Cards */
+    /* Accordion Body Base Reset */
+    .accordion-body {
+      padding: 30px !important;
+    }
+
+    /* Sleek Crisp White Component Grid Cards */
     .uni-card {
-      background: white;
+      background: #ffffff !important; /* Forces the cards to remain solid brilliant white */
       border: 1px solid var(--border-color);
       border-radius: 10px;
       height: 100%;
@@ -122,8 +125,8 @@
     }
     .uni-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(37, 45, 101, 0.1);
-      border-color: var(--lr-light-blue);
+      box-shadow: 0 10px 30px rgba(37, 45, 101, 0.12);
+      border-color: var(--lr-dark-blue);
     }
 
     .card-logo-frame {
@@ -177,13 +180,13 @@
       border: 0;
     }
 
-    /* Soft Gold Compliant Container Block */
+    /* Inner Information Blocks */
     .contact-details {
-      background-color: var(--lr-gold-light);
+      background-color: #ffffff;
       border-radius: 8px;
       padding: 18px;
       font-size: 0.9rem;
-      border: 1px solid var(--lr-gold);
+      border: 1px solid var(--border-color);
       margin-bottom: 20px;
     }
     .panel-header {
@@ -234,6 +237,7 @@
       text-decoration: none;
       padding: 10px;
       transition: all 0.15s ease;
+      background-color: transparent;
     }
     .btn-secondary-action:hover, .btn-secondary-action:focus-visible { 
       background-color: var(--lr-dark-blue) !important; 
@@ -252,12 +256,10 @@
       <img src="https://lh3.googleusercontent.com/d/1RVwQOqm0u2gHQQOnq-3-NrNJQoW41f8s" class="main-logo" alt="Los Rios Community Colleges District">
       <h1 class="fw-bold h2">University Transfer Resource Directory</h1>
       
-      <!-- New professionalized portal description -->
       <p class="mb-3">
         This comprehensive directory provides prospective transfer students with centralized resources for four-year institutions. Each campus listing features direct transfer information hubs, virtual tours, and representative contact channels to guide your transition. Please note that due to external staffing shifts, specific institutional points of contact may occasionally be unavailable; in these instances, we recommend reaching out to the university's general undergraduate admissions office or visiting your local community college transfer center. Students are encouraged to explore a diverse array of campuses to identify the optimal match for their academic and personal goals.
       </p>
       
-      <!-- Disclaimer feedback note matching image_dc7fa4.png structural layout -->
       <p class="feedback-disclaimer mb-4">
         <strong>Note:</strong> To help us improve this resource, students may be requested to provide feedback on this page.
       </p>
@@ -270,7 +272,6 @@
 
   <main class="container mb-5" id="mainDirectoryContent">
     
-    <!-- Dynamic Spinning Status Block Engine -->
     <div id="loadingStatus" class="text-center py-5" aria-live="polite" role="status">
       <div class="spinner-border text-primary mb-2" role="status">
         <span class="visually-hidden">Loading system asset configuration links...</span>
@@ -278,10 +279,8 @@
       <p class="text-muted fw-semibold">Loading live university directory profiles...</p>
     </div>
 
-    <!-- Accordion Shell Matrix Structure -->
     <div class="accordion" id="systemAccordion"></div>
 
-    <!-- Empty/Failed Callback Validation Alert Box -->
     <div id="statusNotification" class="text-center py-5 d-none" aria-live="assertive" role="status"></div>
 
   </main>
@@ -296,6 +295,14 @@
         "Private California University",
         "Out of State University"
     ];
+
+    // Dynamic color profile map to fill expanded category boxes elegantly
+    const categoryColors = {
+        "University of California": "#fbf7e6",      /* Soft UC Gold pastel tint */
+        "California State University": "#fdf1f2",    /* Soft CSU Red pastel tint */
+        "Private California University": "#f6f2fa",  /* Soft Lavender purple pastel tint */
+        "Out of State University": "#fdf5ee"        /* Soft Apricot orange pastel tint */
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
       fetch(apiEndpoint)
@@ -322,6 +329,9 @@
             const accordionId = `categoryCollapse_${catIndex}`;
             const listId = `universityList_${catIndex}`;
             const isFirst = catIndex === 0;
+            
+            // Look up background color tint for this unique category box dropdown
+            const assignedBgColor = categoryColors[category] || "#f8f9fa";
 
             const accordionItem = document.createElement('div');
             accordionItem.className = 'accordion-item';
@@ -333,7 +343,7 @@
                 </button>
               </h2>
               <div id="${accordionId}" class="accordion-collapse collapse ${isFirst ? 'show' : ''}" data-bs-parent="#systemAccordion">
-                <div class="accordion-body bg-light">
+                <div class="accordion-body" style="background-color: ${assignedBgColor} !important;">
                   <ul class="row g-4 list-unstyled mb-0" id="${listId}" aria-label="Available campuses under the ${category} system"></ul>
                 </div>
               </div>
@@ -347,8 +357,12 @@
                 ? `<img src="${school.logoUrl}" class="card-logo" alt="${school.name} branding logo">`
                 : `<span style="font-size: 0.8rem; color: var(--border-color); font-weight: bold; text-align:center;">CAMPUS EMBLEM</span>`;
 
-              const mapQuery = encodeURIComponent(`${school.name}, California`);
-              const dynamicMapEmbed = `<iframe src="https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed" title="Geographic coordinates viewport mapping for ${school.name}" allowfullscreen></iframe>`;
+              // Option 1 Map Query Framework Check: Evaluates column I first, drops back to column B seamlessly
+              const finalLocation = (school.mapQuery && school.mapQuery.trim() !== "") ? school.mapQuery : school.name;
+              const mapQuery = encodeURIComponent(finalLocation);
+              
+              // Standard native free embed URL natively handles text, coordinates, or Plus Codes
+              const dynamicMapEmbed = `<iframe src="https://maps.google.com/maps?q=${mapQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed" title="Geographic coordinates viewport mapping for ${school.name}" allowfullscreen></iframe>`;
 
               const cardListItem = document.createElement('li');
               cardListItem.className = 'col-md-6 col-lg-4';
