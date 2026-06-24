@@ -86,35 +86,74 @@
       box-shadow: 0 0 0 4px var(--lr-dark-blue) !important;
     }
 
-    /* System Level Accordion Customizations */
+    /* System Level Accordion Base Styles */
     .accordion-item {
       border: 1px solid var(--border-color) !important;
       border-radius: 12px !important;
       overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
     .accordion-button {
-      background-color: white !important;
-      color: var(--lr-dark-blue) !important;
       font-size: 1.4rem;
       font-weight: 700;
-      padding: 22px 25px;
-      transition: background-color 0.2s ease;
+      padding: 24px 28px;
+      transition: all 0.2s ease;
     }
-    .accordion-button:not(.collapsed) {
-      border-bottom: 2px solid var(--lr-light-blue);
-      box-shadow: none;
+    .accordion-button:focus {
+      box-shadow: none !important;
     }
 
-    /* Accordion Body Base Reset */
+    /* VIBRANT ACCORDION HEADER COLOR INTERFACES (CRISP & CONTRAST COMPLIANT) */
+    
+    /* 1. University of California (Vibrant Gold / Navy Text Combo) */
+    .header-uc .accordion-button,
+    .header-uc .accordion-button:not(.collapsed) {
+      background-color: #e5bf45 !important;
+      color: #252d65 !important;
+    }
+    .header-uc .accordion-button::after {
+      filter: brightness(0) saturate(100%) invert(13%) sepia(21%) saturate(3015%) hue-rotate(213deg) brightness(96%) contrast(93%); /* Dark Blue Chevron */
+    }
+
+    /* 2. California State University (Vibrant Brand Red / White Text Combo) */
+    .header-csu .accordion-button,
+    .header-csu .accordion-button:not(.collapsed) {
+      background-color: #b30000 !important;
+      color: #ffffff !important;
+    }
+    .header-csu .accordion-button::after {
+      filter: brightness(0) invert(1); /* White Chevron */
+    }
+
+    /* 3. Private California Universities (Vibrant Purple / White Text Combo) */
+    .header-private .accordion-button,
+    .header-private .accordion-button:not(.collapsed) {
+      background-color: #6f42c1 !important;
+      color: #ffffff !important;
+    }
+    .header-private .accordion-button::after {
+      filter: brightness(0) invert(1); /* White Chevron */
+    }
+
+    /* 4. Out of State Universities (Vibrant Deep Orange / White Text Combo) */
+    .header-outofstate .accordion-button,
+    .header-outofstate .accordion-button:not(.collapsed) {
+      background-color: #cc5200 !important;
+      color: #ffffff !important;
+    }
+    .header-outofstate .accordion-button::after {
+      filter: brightness(0) invert(1); /* White Chevron */
+    }
+
+    /* Accordion Body Structural Matrix Padding */
     .accordion-body {
-      padding: 30px !important;
+      padding: 35px !important;
     }
 
     /* Sleek Crisp White Component Grid Cards */
     .uni-card {
-      background: #ffffff !important; /* Forces the cards to remain solid brilliant white */
+      background: #ffffff !important; /* Forces the cards to remain solid brilliant white against background tints */
       border: 1px solid var(--border-color);
       border-radius: 10px;
       height: 100%;
@@ -125,7 +164,7 @@
     }
     .uni-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(37, 45, 101, 0.12);
+      box-shadow: 0 12px 35px rgba(37, 45, 101, 0.15);
       border-color: var(--lr-dark-blue);
     }
 
@@ -180,7 +219,7 @@
       border: 0;
     }
 
-    /* Inner Information Blocks */
+    /* Inner Contact Block Layouts */
     .contact-details {
       background-color: #ffffff;
       border-radius: 8px;
@@ -256,10 +295,12 @@
       <img src="https://lh3.googleusercontent.com/d/1RVwQOqm0u2gHQQOnq-3-NrNJQoW41f8s" class="main-logo" alt="Los Rios Community Colleges District">
       <h1 class="fw-bold h2">University Transfer Resource Directory</h1>
       
+      <!-- Professionalized portal description -->
       <p class="mb-3">
         This comprehensive directory provides prospective transfer students with centralized resources for four-year institutions. Each campus listing features direct transfer information hubs, virtual tours, and representative contact channels to guide your transition. Please note that due to external staffing shifts, specific institutional points of contact may occasionally be unavailable; in these instances, we recommend reaching out to the university's general undergraduate admissions office or visiting your local community college transfer center. Students are encouraged to explore a diverse array of campuses to identify the optimal match for their academic and personal goals.
       </p>
       
+      <!-- Disclaimer feedback note matching image_dc7fa4.png structural layout exactly -->
       <p class="feedback-disclaimer mb-4">
         <strong>Note:</strong> To help us improve this resource, students may be requested to provide feedback on this page.
       </p>
@@ -272,6 +313,7 @@
 
   <main class="container mb-5" id="mainDirectoryContent">
     
+    <!-- Dynamic Spinning Status Block Engine -->
     <div id="loadingStatus" class="text-center py-5" aria-live="polite" role="status">
       <div class="spinner-border text-primary mb-2" role="status">
         <span class="visually-hidden">Loading system asset configuration links...</span>
@@ -279,8 +321,10 @@
       <p class="text-muted fw-semibold">Loading live university directory profiles...</p>
     </div>
 
+    <!-- Accordion Shell Matrix Structure -->
     <div class="accordion" id="systemAccordion"></div>
 
+    <!-- Empty/Failed Callback Validation Alert Box -->
     <div id="statusNotification" class="text-center py-5 d-none" aria-live="assertive" role="status"></div>
 
   </main>
@@ -296,12 +340,20 @@
         "Out of State University"
     ];
 
-    // Dynamic color profile map to fill expanded category boxes elegantly
-    const categoryColors = {
-        "University of California": "#fbf7e6",      /* Soft UC Gold pastel tint */
-        "California State University": "#fdf1f2",    /* Soft CSU Red pastel tint */
-        "Private California University": "#f6f2fa",  /* Soft Lavender purple pastel tint */
-        "Out of State University": "#fdf5ee"        /* Soft Apricot orange pastel tint */
+    // Subtle background color map to fill expanded category panels elegantly
+    const categoryBodyColors = {
+        "University of California": "#fbf7e6",      /* Soft UC Gold subtle background */
+        "California State University": "#fdf1f2",    /* Soft CSU Red subtle background */
+        "Private California University": "#f6f2fa",  /* Soft Lavender purple subtle background */
+        "Out of State University": "#fdf5ee"        /* Soft Apricot orange subtle background */
+    };
+
+    // Style targets mapping classes directly to active CSS block parameters
+    const categoryClassMap = {
+        "University of California": "header-uc",
+        "California State University": "header-csu",
+        "Private California University": "header-private",
+        "Out of State University": "header-outofstate"
     };
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -330,11 +382,12 @@
             const listId = `universityList_${catIndex}`;
             const isFirst = catIndex === 0;
             
-            // Look up background color tint for this unique category box dropdown
-            const assignedBgColor = categoryColors[category] || "#f8f9fa";
+            // Look up background colors and styling class targets
+            const assignedBodyBg = categoryBodyColors[category] || "#f8f9fa";
+            const headerClass = categoryClassMap[category] || "";
 
             const accordionItem = document.createElement('div');
-            accordionItem.className = 'accordion-item';
+            accordionItem.className = `accordion-item ${headerClass}`;
             
             accordionItem.innerHTML = `
               <h2 class="accordion-header">
@@ -343,7 +396,8 @@
                 </button>
               </h2>
               <div id="${accordionId}" class="accordion-collapse collapse ${isFirst ? 'show' : ''}" data-bs-parent="#systemAccordion">
-                <div class="accordion-body" style="background-color: ${assignedBgColor} !important;">
+                <!-- Dropdown drawer body uses subtle background, keeping cards contrasting cleanly -->
+                <div class="accordion-body" style="background-color: ${assignedBodyBg} !important;">
                   <ul class="row g-4 list-unstyled mb-0" id="${listId}" aria-label="Available campuses under the ${category} system"></ul>
                 </div>
               </div>
@@ -357,11 +411,9 @@
                 ? `<img src="${school.logoUrl}" class="card-logo" alt="${school.name} branding logo">`
                 : `<span style="font-size: 0.8rem; color: var(--border-color); font-weight: bold; text-align:center;">CAMPUS EMBLEM</span>`;
 
-              // Option 1 Map Query Framework Check: Evaluates column I first, drops back to column B seamlessly
+              // Option 1 Plus Code & Mapping Query Fallback Processor Engine
               const finalLocation = (school.mapQuery && school.mapQuery.trim() !== "") ? school.mapQuery : school.name;
               const mapQuery = encodeURIComponent(finalLocation);
-              
-              // Standard native free embed URL natively handles text, coordinates, or Plus Codes
               const dynamicMapEmbed = `<iframe src="https://maps.google.com/maps?q=${mapQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed" title="Geographic coordinates viewport mapping for ${school.name}" allowfullscreen></iframe>`;
 
               const cardListItem = document.createElement('li');
